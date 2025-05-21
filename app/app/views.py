@@ -1,15 +1,32 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
-                                   ListModelMixin, RetrieveModelMixin)
+from rest_framework.mixins import (
+    CreateModelMixin,
+    DestroyModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin,
+)
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from .models import (Company, CompanyReport, Department, DepartmentReport,
-                     EEGRecord, Employee, EmployeeReport)
-from .serializers import (CompanyReportSerializer, CompanySerializer,
-                          DepartmentReportSerializer, DepartmentSerializer,
-                          EEGRecordSerializer, EmployeeReportSerializer,
-                          EmployeeSerializer, UserSerializer)
+from .models import (
+    Company,
+    CompanyReport,
+    Department,
+    DepartmentReport,
+    EEGRecord,
+    Employee,
+    EmployeeReport,
+)
+from .serializers import (
+    CompanyReportSerializer,
+    CompanySerializer,
+    DepartmentReportSerializer,
+    DepartmentSerializer,
+    EEGRecordSerializer,
+    EmployeeReportSerializer,
+    EmployeeSerializer,
+    UserSerializer,
+)
 from .services import ReportService
 
 
