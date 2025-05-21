@@ -1,15 +1,22 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
-from .models import (
-    EEGRecord,
-    Company,
-    Department,
-    Employee,
-    BaseReport,
-    CompanyReport,
-    DepartmentReport,
-    EmployeeReport,
-)
+
+from .models import (BaseReport, Company, CompanyReport, Department,
+                     DepartmentReport, EEGRecord, Employee, EmployeeReport)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ("id", "username", "email", "password")
+        extra_kwargs = {
+            "id": {"read_only": True},
+            "password": {"write_only": True},
+        }
+
+    def create(self, validated_data):
+        return get_user_model().objects.create_user(**validated_data)
 
 
 class CompanySerializer(serializers.ModelSerializer):

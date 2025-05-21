@@ -1,31 +1,28 @@
-from rest_framework.mixins import (
-    CreateModelMixin,
-    DestroyModelMixin,
-    ListModelMixin,
-    RetrieveModelMixin,
-)
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
+                                   ListModelMixin, RetrieveModelMixin)
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from .models import (
-    EEGRecord,
-    Company,
-    Department,
-    Employee,
-    EmployeeReport,
-    DepartmentReport,
-    CompanyReport,
-)
-from .serializers import (
-    EEGRecordSerializer,
-    CompanySerializer,
-    DepartmentSerializer,
-    EmployeeSerializer,
-    EmployeeReportSerializer,
-    DepartmentReportSerializer,
-    CompanyReportSerializer,
-)
-from django_filters.rest_framework import DjangoFilterBackend
+from .models import (Company, CompanyReport, Department, DepartmentReport,
+                     EEGRecord, Employee, EmployeeReport)
+from .serializers import (CompanyReportSerializer, CompanySerializer,
+                          DepartmentReportSerializer, DepartmentSerializer,
+                          EEGRecordSerializer, EmployeeReportSerializer,
+                          EmployeeSerializer, UserSerializer)
 from .services import ReportService
+
+
+class UserRegisterView(CreateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = []
+
+
+class UserRUDView(RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
 
 
 class CompanyViewSet(ModelViewSet):
@@ -75,9 +72,9 @@ class CompanyReportViewSet(BaseReportViewSet):
 
     def perform_create(self, serializer):
         company = serializer.validated_data.get("company")
-        employee_ids = Employee.objects.filter(
-            department__company=company
-        ).values_list("id", flat=True)
+        employee_ids = Employee.objects.filter(department__company=company).values_list(
+            "id", flat=True
+        )
 
         avg_indexes = ReportService().aggregate_indexes(employee_ids)
         serializer.save(company=company, **avg_indexes)
