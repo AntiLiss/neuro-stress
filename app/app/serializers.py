@@ -6,7 +6,6 @@ from .models import (BaseReport, Company, CompanyReport, Department,
                      DepartmentReport, EEGRecord, Employee, EmployeeReport)
 
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
