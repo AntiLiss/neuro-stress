@@ -85,6 +85,7 @@ class DepartmentViewSet(ModelViewSet):
 class EmployeeViewSet(ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ["department"]
 
 
@@ -103,6 +104,7 @@ class EEGRecordViewSet(
 ):
     queryset = EEGRecord.objects.all()
     serializer_class = EEGRecordSerializer
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ["employee"]
 
 
@@ -117,14 +119,15 @@ class BaseReportViewSet(
 
 
 @extend_schema_view(
-    list=extend_schema(summary="Получить список отчетов для всех компаний"),
-    retrieve=extend_schema(summary="Получить отчет для конкретной компании"),
+    list=extend_schema(summary="Получить список всех отчетов компаний"),
+    retrieve=extend_schema(summary="Получить конкретный отчет компании"),
     create=extend_schema(summary="Создать отчет для компании"),
     destroy=extend_schema(summary="Удалить отчет компании"),
 )
 class CompanyReportViewSet(BaseReportViewSet):
     queryset = CompanyReport.objects.all()
     serializer_class = CompanyReportSerializer
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ["company"]
 
     def perform_create(self, serializer):
@@ -140,14 +143,15 @@ class CompanyReportViewSet(BaseReportViewSet):
 
 
 @extend_schema_view(
-    list=extend_schema(summary="Получить список отчетов для всех отделов"),
-    retrieve=extend_schema(summary="Получить отчет для конкретного отдела"),
+    list=extend_schema(summary="Получить список отчетов отделов"),
+    retrieve=extend_schema(summary="Получить конкретный отчет отдела"),
     create=extend_schema(summary="Создать отчет для отдела"),
     destroy=extend_schema(summary="Удалить отчет отдела"),
 )
 class DepartmentReportViewSet(BaseReportViewSet):
     queryset = DepartmentReport.objects.all()
     serializer_class = DepartmentReportSerializer
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ["department"]
 
     def perform_create(self, serializer):
@@ -162,14 +166,15 @@ class DepartmentReportViewSet(BaseReportViewSet):
 
 
 @extend_schema_view(
-    list=extend_schema(summary="Получить список отчетов для всех сотрудников"),
-    retrieve=extend_schema(summary="Получить отчет для конкретного сотрудника"),
+    list=extend_schema(summary="Получить список всех отчетов сотрудников"),
+    retrieve=extend_schema(summary="Получить конкретный отчет сотрудника"),
     create=extend_schema(summary="Создать отчет для сотрудника"),
     destroy=extend_schema(summary="Удалить отчет сотрудника"),
 )
 class EmployeeReportViewSet(BaseReportViewSet):
     queryset = EmployeeReport.objects.all()
     serializer_class = EmployeeReportSerializer
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ["employee"]
 
     def perform_create(self, serializer):
