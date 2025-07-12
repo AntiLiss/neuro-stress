@@ -22,7 +22,7 @@ Backend-часть веб-приложения для оценки эмоцио�
 ## 🚀 Быстрый старт
 **(ПРЕДВАРИТЕЛЬНО СОЗДАТЬ .env ФАЙЛ!!!)**
 ```bash
-git clone https://github.com/AntiLiss/neuro-stress.git
+git clone https://github.com/insolid/neuro-stress.git
 cd neuro-stress
 docker compose up
 ```
